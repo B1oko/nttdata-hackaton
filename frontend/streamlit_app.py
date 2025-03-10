@@ -34,25 +34,31 @@ country_origin = st.selectbox("Country of Origin", ['United-States', 'Philippine
 # Llamar a la API
 if st.button("Predict Income"):
     api_url = "http://127.0.0.1:8000/predict"
+    
+    # Crear el JSON con un solo registro
     data = {
-        "age": age,
-        "work_class": work_class,
-        "education": education,
-        "education_years": education_years,
-        "marital_status": marital_status,
-        "occupation": occupation,
-        "relationship": relationship,
-        "race": race,
-        "gender": gender,
-        "capital_gains": capital_gains,
-        "capital_losses": capital_losses,
-        "weekly_hours": weekly_hours,
-        "country_origin": country_origin
+        "input_data": [
+            {
+                "fnlwgt": 318,
+                "education": education,
+                "education.num": education_years,
+                "marital.status": marital_status,
+                "occupation": occupation,
+                "relationship": relationship,
+                "race": race,
+                "sex": gender,
+                "capital.gain": capital_gains,
+                "capital.loss": capital_losses,
+                "hours.per.week": weekly_hours,
+                "native.country": country_origin
+            }
+        ]
     }
+
     response = requests.post(api_url, json=data)
     
     if response.status_code == 200:
-        result = response.json()["prediction"]
+        result = response.json()["predictions"]
         st.success(f"The model predicts that the annual income is: {result}")
     else:
         st.error("Error in API request!")
