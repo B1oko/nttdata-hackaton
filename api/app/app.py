@@ -3,9 +3,13 @@ from pydantic import BaseModel
 from typing import List, Dict
 import joblib
 import pandas as pd
+import numpy as np
+
+MODEL_PKL = "model_nn_1.pkl"
+
 
 # Cargar el modelo entrenado (asegúrate de que model.pkl está en la misma carpeta)
-model = joblib.load("models/model.pkl")
+model = joblib.load(f"models/{MODEL_PKL}")
 
 # Inicializar la API
 app = FastAPI(title="Income Prediction API", version="1.0.0")
@@ -54,7 +58,7 @@ def preprocess_data(data: List[Dict]):
     df = pd.get_dummies(df, columns=categorical_features)
 
     # Asegurar que todas las columnas usadas en entrenamiento estén presentes
-    model = joblib.load("models/model.pkl")  # Cargar nombres de columnas usadas en el modelo
+    model = joblib.load(f"models/{MODEL_PKL}")  # Cargar nombres de columnas usadas en el modelo
     for col in model:
         if col not in df.columns:
             df[col] = 0  # Agregar columnas faltantes con valor 0
