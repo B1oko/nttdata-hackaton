@@ -9,6 +9,7 @@ MODEL_PKL = "model_nn_1.pkl"
 
 
 # Cargar el modelo entrenado (asegúrate de que model.pkl está en la misma carpeta)
+from model import ModeloNN
 model = joblib.load(f"models/{MODEL_PKL}")
 
 # Inicializar la API

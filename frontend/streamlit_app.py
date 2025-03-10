@@ -33,7 +33,7 @@ country_origin = st.selectbox("Country of Origin", ['United-States', 'Philippine
 
 # Llamar a la API
 if st.button("Predict Income"):
-    api_url = "http://127.0.0.1:8000/predict"
+    api_url = "https://nttdata-hackaton-47370833488.us-central1.run.app/predict"
     
     # Crear el JSON con un solo registro
     data = {
