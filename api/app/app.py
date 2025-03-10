@@ -12,6 +12,28 @@ MODEL_PKL = "model_nn_1.pkl"
 from model import ModeloNN
 model = joblib.load(f"models/{MODEL_PKL}")
 
+import joblib
+import pandas as pd
+
+# Cargar la pipeline guardada
+full_pipeline = joblib.load("models/preprocessing_pipeline.pkl")
+
+# Cargar el modelo previamente entrenado
+modelo = joblib.load("models/modelo_entrenado.pkl")  # Asegúrate de haber guardado el modelo
+
+# Cargar los nuevos datos sin preprocesar
+df_nuevo = pd.read_csv("datos_nuevos.csv")  # Archivo con datos nuevos sin preprocesar
+
+# Aplicar la pipeline de preprocesado a los nuevos datos
+df_nuevo_preprocesado = full_pipeline.transform(df_nuevo)
+
+# Hacer inferencia con el modelo sobre los datos transformados
+predicciones = modelo.predict(df_nuevo_preprocesado)
+
+# Mostrar los resultados
+print("✅ Predicciones realizadas correctamente.")
+print(predicciones)
+
 # Inicializar la API
 app = FastAPI(title="Income Prediction API", version="1.0.0")
 
